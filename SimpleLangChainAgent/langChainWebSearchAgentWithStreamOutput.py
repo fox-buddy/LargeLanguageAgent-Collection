@@ -53,13 +53,6 @@ search_results = search.invoke(weather_question)
 # define llm model with tools
 tools = [search]
 
-#model_with_tools = model.bind_tools(tools)
-# send chat to model --> Will not content a response
-# response = model_with_tools.invoke(messages)
-# print(f"Message content: {response.text()}\n")
-# print(f"Tool calls: {response.tool_calls}")
-# print_token_usage(response)
-
 
 # Create Agent
 agent_executor = create_react_agent(model, tools)
