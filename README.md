@@ -1,7 +1,9 @@
 # LargeLanguageAgent-Collection
 
-You need to install python and have an openAI API Key (currently) and a tavily API Key for Web Search (Tool)
-Dependencys are in requirements.txt
+You need to install python and have an openAI API Key (currently) and a tavily API Key for Web Search ([Tool](https://app.tavily.com/home))
+
+## Used Framework
+https://python.langchain.com/docs/introduction
 
 ## init on windows
 - python -m venv venv
