@@ -5,15 +5,18 @@ import sys
 
 class PDFChromaLoader:
 
-    def __init__(self):
+    def __init__(self, colname="btccol", pdfpath="C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/bitcoinwp.pdf"):
         self.collection: any
+        self.collection_name = colname
         self.client: any
+
         self.chroma_path = "C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/chromafiles"
-        self.pdf_path = "C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/bitcoinwp.pdf"
+        
+        self.pdf_path = pdfpath
 
         try:
             self.client = chromadb.PersistentClient(path=self.chroma_path)
-            self.collection = self.client.create_collection(name="btccol")
+            self.collection = self.client.create_collection(name=self.collection_name)
             self.load_pdf_file_to_embedd()
         except Exception as err_client:
             print(f"There was an error creating collection. We try to retrieve existing one: {err_client}")
@@ -21,7 +24,7 @@ class PDFChromaLoader:
 
     def try_to_get_existing_collection(self):
         try:
-            return self.client.get_collection(name="btccol")
+            return self.client.get_collection(name=self.collection_name)
         except Exception as e:
             raise(e)
        
@@ -35,8 +38,8 @@ class PDFChromaLoader:
             document_text = ''
             try:
                 document_text = text_line.text
-            except Exception as err_file:
-                print(f"something went wrong while embedding the pdf document line: {err_file}")
+            except Exception as err_inner_text:
+                print(f"something went wrong while retrieving inner Text: {err_inner_text}")
 
             try:
                 if(document_text):
@@ -46,7 +49,7 @@ class PDFChromaLoader:
                     self.collection.add(ids=str(idx), embeddings=embeddings, documents=[document_text])
                     print(f"processed {idx}")
             except Exception as err_embed:
-                print(f"Something went wrong while embedding:  {err_embed}")
+                print(f"Something went wrong while embedding document:  {err_embed}")
                 print(document_text)
 
 
