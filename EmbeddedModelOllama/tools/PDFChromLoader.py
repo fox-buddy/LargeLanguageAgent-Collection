@@ -1,9 +1,8 @@
 import chromadb
 import pdfquery
 import ollama
-import sys
 
-class PDFChromaLoader:
+class DocumentEmbedderPdf:
 
     def __init__(self, colname="btccol", pdfpath="C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/bitcoinwp.pdf"):
         self.collection: any
