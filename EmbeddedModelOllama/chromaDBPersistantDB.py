@@ -6,6 +6,7 @@ import sys
 
 try:
     btc_vector_db = DocumentEmbedderPdf("btccol", "C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/bitcoinwp.pdf")
+    print("Retrieved Vecor Database")
 except Exception as err_db:
     print("Error creating or getting Vector Database")
     print(err_db)

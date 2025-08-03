@@ -20,6 +20,7 @@ class DocumentEmbedderPdf:
         except Exception as err_client:
             print(f"There was an error creating collection. We try to retrieve existing one: {err_client}")
             self.collection = self.try_to_get_existing_collection()
+            print("Existing Collection Retrieved")
 
     def try_to_get_existing_collection(self):
         try:
