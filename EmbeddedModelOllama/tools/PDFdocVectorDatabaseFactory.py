@@ -2,7 +2,7 @@ import chromadb
 import pdfquery
 import ollama
 
-class DocumentEmbedderPdf:
+class PDFdocVectorDatabaseFactory:
 
     def __init__(self, colname="btccol", pdfpath="C:/Users/Torst/Documents/GitHub/LargeLanguageAgent-Collection/EmbeddedModelOllama/bitcoinwp.pdf"):
         self.collection: any
