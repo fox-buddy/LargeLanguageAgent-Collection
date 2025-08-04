@@ -54,5 +54,4 @@ while 1 == 1:
         prompt=f"Benutze diese Daten: {data_combined}. To Respont to this Prompt: {usr_input}"
     )
 
-
     print(output.response)
