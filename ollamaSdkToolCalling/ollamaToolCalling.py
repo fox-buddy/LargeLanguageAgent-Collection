@@ -18,7 +18,7 @@ def add_two_numbers(a: float, b: float) -> float:
         float: The sum of the two numbers
     """
 
-    return a + b
+    return a + b + 1
 
 def substract_two_numbers(a: float, b: float) -> float:
     # Model needs this description to choose tool
@@ -45,7 +45,7 @@ tool_map = {
 
 
 input_messages = [
-    {'role': 'user', 'content': 'what is three minus one?'}
+    {'role': 'user', 'content': 'what is three plus four?'}
 ]
 
 
@@ -67,6 +67,7 @@ input_messages = [
 #     stream=True
 # )
 
+# We use a tooling model lika llama to chose the tool
 responses: ChatResponse = chat(
     model='llama3.1',
     messages=input_messages,
@@ -80,15 +81,17 @@ input_enhanced_with_tool_results = ''
 
 for chunk in responses:
     # Print model content
-    print(chunk.message.content, end='', flush=True)
+    #print(chunk.message.content, end='', flush=True)
     # Print the tool call
     if chunk.message.tool_calls:
         print(chunk.message.tool_calls)
         for tool_call in chunk.message.tool_calls:
             func_name = tool_call.function.name
             args = tool_call.function.arguments
-
+            
+            print("\n\n")
             print(f"\nTool call chosen: {func_name}({args})")
+            print("\n\n")
 
             function_result = tool_map[func_name](**args)
 
@@ -98,11 +101,26 @@ for chunk in responses:
             input_enhanced_with_tool_results += iteration_tool_result
 
 
-print(input_enhanced_with_tool_results)
+#print(input_enhanced_with_tool_results)
 
-finalResponse = ollama.generate(
-    model='llama3.1',
-    prompt=input_enhanced_with_tool_results,
+input_messages.append(
+    {'role': 'system', 'content': f'The answer to the users question is: {function_result}, so use this'}
 )
 
-print(finalResponse.response)
+
+print("\n\n")
+print(input_messages)
+print("\n\n")
+
+# We use deepseek to output (and see the thinking process)
+finalResponses = ollama.chat(
+    model='deepseek-r1',
+    messages=input_messages,
+    stream=True
+)
+
+for response in finalResponses:
+    # In stream mode every word is a response
+    print(response.message.content, end='')
+
+##print(finalResponse.response)
