@@ -104,8 +104,14 @@ for chunk in responses:
 #print(input_enhanced_with_tool_results)
 
 input_messages.append(
-    {'role': 'system', 'content': f'The answer to the users question is: {function_result}, so use this'}
+    #{'role': 'system', 'content': f'The answer to the users question is: {function_result}, so use this'}
+    {'role': 'system', 'content': 'You are a response Agent that formulates user questions and the results to these question. You can use the content from the following system messages. To not make any decisions. All logic was implemented in tools, which results are also presnt in the following contents'}
 )
+
+input_messages.append(
+    {'role': 'system', 'content': input_enhanced_with_tool_results}
+)
+
 
 
 print("\n\n")
