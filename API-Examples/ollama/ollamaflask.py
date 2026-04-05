@@ -30,12 +30,14 @@ def aiChat():
     # It would be a good idea to abstract keep_alive to a startup routine which does a very small request
     # Ollama Server has a default queue of 512 requests. And we could enhance the number of parallel requests (multitasking... so not a real parallel procedure)
 
-    # In Case of Transformers 
+    # In Case of Transformers SDK
     # -> we must Start the model as a Thread (a separate Service that loads a model once)
-    # -> Implement a queue Because there is no server that handles this for us
+    # -> Implement a queue on our own. A queue is either possible with the python package or a database
 
-    # In both cases it makes sense to send responses via mqtt (publish via mqtt). Waiting for a gen AI Output transforms the business case from request/response to subscribe result --> request generation --> response ACK --> publish generated result
-    # As an Alternative for Transformers queue and response via http in queue
+    # In both cases it makes sense to send responses via mqtt (publish via mqtt). 
+    # Waiting for a gen AI Output transforms the business case from request/response to subscribe result --> request generation --> response ACK --> publish generated result
+    # When working with queue --> declare jobID --> Save job in db --> perform job and update --> implement an endpoint to query JOB
+   
 
     response: ChatResponse = chat(model=used_model, messages=message_pipeline, keep_alive=1)
 
